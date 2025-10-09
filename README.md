@@ -31,6 +31,8 @@ This repository reorganizes patents using abstract classes and improvement param
 
 ## スクリーンショット / デモ (Screenshots / Demo)
 
+**[Analogy Patent Finder Demo](./demo.gif)**
+
 **[デモ動画 / Demo Video](https://github.com/user-attachments/assets/57123fa9-611a-4b85-8982-6007a24e1810)**
 
 ---
@@ -137,7 +139,7 @@ If you have Docker installed, you can try it out locally in just a few steps.
 
 ---
 
-## 仕組み（ハイレベル） (How It Works (High-Level))
+## 仕組み(How It Works)
 検索対象の特許文書を、抽象クラスと改善パラメータの二軸で正規化し、クエリ側も同様に抽象化して対応付けます。LLMは説明生成や曖昧な表現の正規化を担い、結果の可読性や転用可能性の判断を補助します。
 
 実装はクライアント／サーバ構成で、Docker Composeでアプリケーション・API・データベース（MongoDB）をまとめて起動します。
@@ -222,6 +224,7 @@ This software is provided under the **MIT License**.
   url     = {[https://github.com/mitas30/AnalogyPatentFinder](https://github.com/mitas30/AnalogyPatentFinder)},
   license = {MIT}
 }
+```
 
 ## Star ⭐
 このアイデアが役に立ちそうだと感じたら、ぜひスターで応援してください。継続開発の励みになります！
@@ -232,3 +235,4 @@ This software is provided under the **MIT License**.
 If you find this idea useful, please give it a star to show your support! It motivates continued development.
 
 </details>
+
