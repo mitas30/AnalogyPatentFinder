@@ -29,9 +29,9 @@ This repository reorganizes patents using abstract classes and improvement param
 
 ---
 
-## スクリーンショット / デモ (Screenshots / Demo)
+## デモ (Demo)
 
-**[Analogy Patent Finder Demo](./demo.gif)**
+![Analogy Patent Finder Demo](./demo.gif)
 
 **[デモ動画 / Demo Video](https://github.com/user-attachments/assets/57123fa9-611a-4b85-8982-6007a24e1810)**
 
@@ -235,4 +235,5 @@ This software is provided under the **MIT License**.
 If you find this idea useful, please give it a star to show your support! It motivates continued development.
 
 </details>
+
 
