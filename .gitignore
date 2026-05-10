@@ -1,11 +1,25 @@
-#API_Keyの格納庫
-config.json
+# Project-local secrets and machine-specific files
+/config.json
+/server/config/config.json
 .vscode/
 mongosh/
-package-lock.json
 
-# データの保管
+# Project data not intended for Git
 data/
+
+# Python generated files
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+env/
+ENV/
 
 # Logs
 logs
