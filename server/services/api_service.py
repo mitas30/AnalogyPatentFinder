@@ -17,7 +17,7 @@ class onlineGeminiClient:
     def __init__(self):
         self.gemini_info = self._load_api_info()
         genai.configure(api_key=self.gemini_info["GEMINI_API_KEY"])
-        self.client=genai.GenerativeModel(model_name="gemini-1.5-pro")
+        self.client=genai.GenerativeModel(model_name=self.gemini_info["USE_GEMINI_MODEL"])
 
     def _load_api_info(self)->dict[str,str]:
         # JSON設定ファイルを開いて読み込む
@@ -26,6 +26,9 @@ class onlineGeminiClient:
             config = json.load(file)
         ret_dict={}
         ret_dict["GEMINI_API_KEY"]=config['GEMINI_API_KEY']
+        ret_dict["USE_GEMINI_MODEL"]=config['USE_GEMINI_MODEL']
+        if not ret_dict["USE_GEMINI_MODEL"]:
+            raise ValueError("config/config.json の USE_GEMINI_MODEL を設定してください。")
         return ret_dict
     
     def guess_abstract_class(self,object:str)->dict[str,list]:
