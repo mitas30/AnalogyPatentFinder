@@ -55,6 +55,7 @@ def setup_logging():
 
     # ファイル出力用のハンドラー設定 
     log_path=os.path.join(os.path.dirname(os.path.abspath(__file__)),'../log/app.log')
+    os.makedirs(os.path.dirname(log_path), exist_ok=True)
     file_handler = RotatingFileHandler(log_path, maxBytes=1048576, backupCount=3,encoding='utf-8')
     file_handler.setLevel(logging.DEBUG)
     file_handler.setFormatter(CleanFormatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
