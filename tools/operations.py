@@ -1,12 +1,15 @@
+from __future__ import annotations
+
+from tools._bootstrap import activate_server_context
+
+activate_server_context()
+
 import json,logging,os,shutil,re,datetime,time
-import fitz
 from bson.objectid import ObjectId
-from typing import Literal,Tuple
-from fitz import Document
-from openai import OpenAI
+from typing import Any,Literal,Tuple
 from models.model import patentManager,patentQuery,patentBulkUpdater,patentCleaner,abstractAdmin
-from .api_service import patentUrlFetcher
-import numpy as np,seaborn as sns,matplotlib.pyplot as plt
+
+Document = Any
 
 logger = logging.getLogger(__name__)
 
@@ -176,6 +179,10 @@ class pdfDataProcessor:
         成功した場合は、抽出データのmapを返す。
         どこかで失敗した場合は、SplitErrorを返す
         """
+        try:
+            import fitz
+        except ModuleNotFoundError as e:
+            raise RuntimeError("PyMuPDF is required for patent PDF import. Install server/requirements.txt.") from e
         pdf_doc=fitz.open(file_path)
         doc_description=self._slice_patent_section(pdf_doc,r"【発明の効果】",r"【図面の簡単な説明】")
         overview_or_detail=re.split(r"【\s*発明の詳細な説明\s*】.*\n",doc_description)
@@ -303,6 +310,8 @@ class gptClient:
     GPTを使ったメソッド集合のクラス。このクラスには、GPTを使う小さな部分関数のみを記述すること。
     '''
     def __init__(self):
+        from openai import OpenAI
+
         self.openai_api_key = self._load_api_key()
         self.client=OpenAI(api_key=self.openai_api_key)
         self.current_model="gpt-4o"
@@ -521,7 +530,7 @@ class patentProcessor:
     def __init__(self):
         self.db_query = patentQuery(collection_name="patents")
         self.db_updater = patentBulkUpdater(collection_name="patents")
-        self.gpt_client = gptClient()
+        self.gpt_client = None
         self.config = self._load_process_config()
         
     def _load_process_config(self):
@@ -586,9 +595,11 @@ class patentProcessor:
             id_list = [d["id"] for d in part_doc_list]
             processing_data = self._prepare_data(part_doc_list, config)
 
-            # GPTによる処理
-            gpt_function = getattr(self.gpt_client, config['gpt_function'])
             if is_process:
+                if self.gpt_client is None:
+                    self.gpt_client = gptClient()
+                # GPTによる処理
+                gpt_function = getattr(self.gpt_client, config['gpt_function'])
                 output_data = gpt_function(processing_data, is_collect)
             else:
                 for idx, data in enumerate(processing_data):
@@ -615,6 +626,8 @@ class gptBatch:
     主に、OpenAIにbatch処理を依頼する関数と、batch処理の結果を取得して、加工、DBに挿入する処理などを担当する
     '''
     def __init__(self):
+        from openai import OpenAI
+
         self.openai_api_key = self._load_api_key()
         self.using_model=self._load_using_model()
         self.client=OpenAI(api_key=self.openai_api_key)
@@ -1025,6 +1038,8 @@ class gptBatch:
 #NOTE 現在のところ、このクラスは使用していない                     
 class fineTuning:
     def __init__(self):
+        from openai import OpenAI
+
         self.openai_api_key = self._load_api_key()
         self.client=OpenAI(api_key=self.openai_api_key)
     
@@ -1117,6 +1132,10 @@ class expOperator:
         """_summary_ 分類された改善パラメータの数を集計して、logに出力する
         
         """
+        import matplotlib.pyplot as plt
+        import numpy as np
+        import seaborn as sns
+
         db_query=patentQuery(collection_name="patents")
         res_list=db_query.get_parameter_counts()
         class_list=[]
@@ -1140,6 +1159,10 @@ class expOperator:
         """_summary_ 分類されたfunction_classesの数を集計して、logに出力する
         
         """
+        import matplotlib.pyplot as plt
+        import numpy as np
+        import seaborn as sns
+
         db_query = patentQuery(collection_name="patents")
         res_list = db_query.get_function_class_counts()
         class_list=[]
@@ -1168,6 +1191,8 @@ def update_documents_with_full_url(max_doc: int = None,
     引数:
         max_doc (int): 更新するdocumentの最大数 (デフォルトはNone)
     """
+    from services.api_service import patentUrlFetcher
+
     patent_office_connector = patentUrlFetcher()
     db_reader = patentQuery(collection_name="patents")
     db_updater = patentBulkUpdater(collection_name="patents")

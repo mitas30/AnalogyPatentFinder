@@ -11,8 +11,7 @@ logger=logging.getLogger(__name__)
 #* 一定リクエストまで無料の、Gemini APIを使うことにする。
 
 class onlineGeminiClient: 
-    """_summary_
-    \n ユーザからの入力をもとに、Geminiで処理する関数のクラス。
+    """ユーザからの入力をもとに、Geminiで処理する関数のクラス。
     """
     def __init__(self):
         self.gemini_info = self._load_api_info()

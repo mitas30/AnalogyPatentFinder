@@ -1,5 +1,10 @@
-from services.service import pdfDataProcessor,fineTuning,expOperator,patentProcessor
-from services import service
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+
+from tools.operations import pdfDataProcessor,fineTuning,expOperator,patentProcessor
+from tools import operations as service
     
 # !DBに書き込むので注意すること
 def test_fetch_full_url(max_doc:int=100):
