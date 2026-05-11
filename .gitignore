@@ -5,6 +5,7 @@
 mongosh/
 
 # Project data not intended for Git
+mongo/initial-data*.json
 data/
 
 # Python generated files
