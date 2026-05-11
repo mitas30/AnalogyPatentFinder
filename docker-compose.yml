@@ -28,6 +28,7 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
+      - ./mongo:/local-seed:ro
     environment:
       - MONGO_INITDB_DATABASE=analogie_finder
 
