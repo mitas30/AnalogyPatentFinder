@@ -1,9 +1,9 @@
-# AnalogyPatentFinder
+# Analogical Patent Finder
 
 **Function × Parameter で他分野特許を探し、LLMで発想用カードに変換する設計アナロジー支援ツール**
 
 ## 概要
-AnalogyPatentFinder は、自分の技術課題を `<flow に対して function するもの> の <parameter> を上げる` という構造に分解し、同じ `function × parameter` を持つ特許を検索する。
+AnalogicalPatentFinder は、自分の技術課題を `<flow に対して function するもの> の <parameter> を上げる` という構造に分解し、同じ `function × parameter` を持つ特許を検索する。
 検索結果は、特許原文ではなく「課題と背景」「解決策」「応用先」のカードとして提示する。
 
 > 解決策の自動転用ツールではない。  
@@ -20,7 +20,7 @@ AnalogyPatentFinder は、自分の技術課題を `<flow に対して function 
 
 ## デモ動画
 
-![Analogy Patent Finder Demo](./demo.gif)
+![Analogical Patent Finder Demo](./demo.gif)
 
 https://github.com/user-attachments/assets/57123fa9-611a-4b85-8982-6007a24e1810
 
@@ -78,7 +78,7 @@ https://github.com/user-attachments/assets/57123fa9-611a-4b85-8982-6007a24e1810
 
 LLMに直接アイデアを出させると、実在する技術事例との接続が弱くなる可能性がある。
 
-AnalogyPatentFinder は、実在する特許文書を source としつつ、LLMで読みやすいカードに変換する。
+AnalogicalPatentFinder は、実在する特許文書を source としつつ、LLMで読みやすいカードに変換する。
 
 ---
 
@@ -152,8 +152,8 @@ LLMは、解決策の正しさを保証するためではなく、特許を発�
 ### 3 Clone
 
 ```bash
-git clone https://github.com/mitas30/AnalogyPatentFinder.git
-cd AnalogyPatentFinder
+git clone https://github.com/mitas30/AnalogicalPatentFinder.git
+cd AnalogicalPatentFinder
 ```
 
 ### 4 Configure
